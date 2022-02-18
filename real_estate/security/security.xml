@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+<!--    created category for group-->
+    <record model="ir.module.category" id="estate_category_module">
+        <field name="name">Real Estate Solution</field>
+        <field name="description"> Category Of Real Estate Group</field>
+    </record>
+
+<!--User Group-->
+    <record id="group_user_real_estate" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="estate_category_module"/>
+    </record>
+
+<!--Manager Group-->
+    <record id="group_real_estate" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="estate_category_module"/>
+<!--        <field name="implied_ids" eval="[(4, ref('group_user_real_estate'))]"/>-->
+    </record>
+
+<!--    Assign record rule to Manager-->
+    <record id="real_estate_record_rule" model="ir.rule">
+        <field name="name">Manager Record Rule</field>
+        <field name="model_id" ref="model_estate_property" />
+        <field name="global" eval="True" />
+        <field name="domain_force">[('seller','=', user.id)]</field>
+        <field eval="[(4,ref('group_real_estate'))]" name="groups"/>
+<!--        <field name = "perm_read" eval = "True" />-->
+<!--        <field name = "perm_write" eval = "True" />-->
+<!--        <field name = "perm_create" eval = "True" />-->
+<!--        <field name = "perm_unlink" eval = "False" />-->
+    </record>
+</odoo>
